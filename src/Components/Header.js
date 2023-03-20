@@ -2,9 +2,9 @@ import React from "react";
 
 function Header() {
     return (
-        <div>
-            * Header *
-        </div>
+        <header>
+            Stephen's todo list
+        </header>
     )
 }
 

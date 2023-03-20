@@ -1,3 +1,10 @@
 body {
-  margin: 10;
+  margin: 0px;
+  background: lightblue;
+}
+
+header {
+  text-align: center;
+  font-size: 30px;
+  padding: 5px;
 }
