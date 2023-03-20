@@ -5,6 +5,14 @@ body {
 
 header {
   text-align: center;
-  font-size: 30px;
+  font-size: 40px;
   padding: 5px;
+}
+
+filter {
+  display: flex;
+  background: lightcoral;
+  font-size: 20px;
+  padding: 5px;
+  width: 100%;
 }

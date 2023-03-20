@@ -1,12 +1,21 @@
 import React from "react";
-import TaskList from "./TaskList";
+import Category from "./Category";
 
-function Filter() {
+function Filter({ categories, tasks }) {
+    const filteredTasks = tasks.filter(task => true)
+    const categoryComponents = categories.map(category =>
+        <Category
+            key={category.name}
+            categorizedTasks={filteredTasks.filter(task => task.category_id === category.id)}
+        />)
+
+    // console.log(filteredTasks)
+
     return (
-        <div>
+        <filter>
             * Filter *
-            <TaskList />
-        </div>
+            {categoryComponents}
+        </filter>
     )
 }
 
