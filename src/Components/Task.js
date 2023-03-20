@@ -1,10 +1,12 @@
 import React from "react";
 
-function Task() {
+function Task({ task }) {
+    //console.log(task)
+    const taskDescription = task.high_priority ? task.description.toUpperCase() : task.description.toLowerCase()
     return (
-        <div>
-
-        </div>
+        <li >
+            {taskDescription}
+        </li>
     )
 }
 

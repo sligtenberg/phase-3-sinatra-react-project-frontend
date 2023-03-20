@@ -2,7 +2,7 @@ import React from "react";
 
 function NewCategory() {
     return (
-        <div>
+        <div className="new-item">
             * NewCategory *
         </div>
     )

@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from "react";
-import Header from "./Header"
 import Filter from "./Filter";
+import Category from "./Category";
 import NewTask from "./NewTask";
 import NewCategory from "./NewCategory";
 
@@ -24,10 +24,19 @@ function App() {
       .then(setTasks)
   }, [])
 
+  const categoryComponents = categories.map(category =>
+    <Category
+        key={category.id}
+        category={category}
+        categorizedTasks={tasks.filter(task => task.category_id === category.id)}
+    />)
+
+
   return (
     <div >
-      <Header />
+      <h1>Stevo's todo list</h1>
       <Filter categories={categories} tasks={tasks}/>
+      {categoryComponents}
       <NewTask setTasks={setTasks}/>
       <NewCategory setCategories={setCategories}/>
     </div>
