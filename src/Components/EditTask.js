@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 
-function EditTask({ task, categoryList, setEditTask }) {
+function EditTask({ task, categoryList, currentCategory }) {
 
-    const dropdownOptions = categoryList.map(category =>
-        <option value={category}>{category}</option>)
+    const dropdownOptions = categoryList.map(categoryName =>
+        <option key={categoryName} value={categoryName} >{categoryName}</option>)
 
     return (
         <form>
-            <input placeholder={task.name}></input>
-            <select>
-                {dropdownOptions}
-            </select>
-            <input type="checkbox"></input>
+            <input type="text" defaultValue={task.description}></input>
+            <select defaultValue={currentCategory}>{dropdownOptions}</select>
+            <input type="checkbox" id="priority" defaultChecked={task.high_priority}></input>
+            <label htmlFor="priority">High Priority</label>
+            <input type="submit" id="form-submit" className="right-align"></input>
         </form>
     )
 }

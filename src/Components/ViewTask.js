@@ -1,16 +1,13 @@
 import React from "react";
 
 function ViewTask({ task, setEditMode }) {
-
-    const taskDescription = task.high_priority ?
-        task.description.toUpperCase() :
-        task.description.toLowerCase()
     
     return (
         <span>
-            {taskDescription}
-            <button onClick={() => setEditMode(true)}>Edit</button>
-            <button>Delete</button>
+            <span onClick={() => setEditMode(true)}>
+                {task.high_priority ? task.description.toUpperCase() : task.description.toLowerCase()}
+            </span>
+            <button className="right-align">X</button>
         </span>
     )
 }
