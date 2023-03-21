@@ -24,6 +24,7 @@ function App() {
   const addNewTaskToDOM = newTask => setTasks([...tasks, newTask])
   const removeTaskFromDOM = taskId => setTasks(tasks.filter(task => task.id !== taskId))
   const modifyTaskOnDOM = newTask => setTasks(tasks.map(task => task.id === newTask.id ? newTask : task))
+  const addNewCategoryToDOM = newCategory => setCategories([...categories, newCategory])
 
   const categoryComponents = categories.map(category =>
     <Category
@@ -40,7 +41,7 @@ function App() {
       <h1>Stevo's todo list</h1>
       <Filter />
       {categoryComponents}
-      <NewCategory setCategories={setCategories} />
+      <NewCategory addNewCategoryToDOM={addNewCategoryToDOM} />
     </div>
   );
 }
