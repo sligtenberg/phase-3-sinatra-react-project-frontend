@@ -1,17 +1,11 @@
 import React, {useState, useEffect } from "react";
 import Filter from "./Filter";
 import Category from "./Category";
-import NewTask from "./NewTask";
 import NewCategory from "./NewCategory";
 
 function App() {
   const [categories, setCategories] = useState([])
   const [tasks, setTasks] = useState([])
-
-  const categoryList = categories.map(category => category.name)
-
-  // console.log(tasks)
-  // console.log(categories)
 
   // execute on load
   useEffect(() => {
@@ -31,17 +25,20 @@ function App() {
         key={category.id}
         category={category}
         tasks={tasks.filter(task => task.category_id === category.id)}
-        categoryList={categoryList}
+        addNewTaskToDOM={addNewTaskToDOM}
     />)
 
+    function addNewTaskToDOM (newTask) {
+      console.log(newTask)
+      setTasks([...tasks, newTask])
+    }
 
   return (
     <div >
       <h1>Stevo's todo list</h1>
-      <Filter categoryList={categoryList} tasks={tasks}/>
+      <Filter />
       {categoryComponents}
-      <NewTask setTasks={setTasks}/>
-      <NewCategory setCategories={setCategories}/>
+      <NewCategory setCategories={setCategories} />
     </div>
   );
 }

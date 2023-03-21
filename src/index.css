@@ -17,6 +17,7 @@ h1 {
 
 h3 {
   margin: 5px 0px;
+  display: inline
 }
 
 ul {
@@ -37,10 +38,12 @@ button, input[type=submit] {
   border: 1px solid;
   border-radius: 4px;
   background: white;
+  float: right;
 }
 
-.right-align {
-  float: right;
+.bold {
+  font-weight: bold;
+  color: darkred;
 }
 
 .filter {
@@ -51,7 +54,7 @@ button, input[type=submit] {
   width: 100%;
 }
 
-.bubble {
+.category {
   margin: 10px;
   padding: 10px 15px;
   border: 1px solid;

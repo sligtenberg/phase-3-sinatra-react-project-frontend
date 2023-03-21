@@ -2,8 +2,8 @@ import React from "react";
 
 function NewCategory() {
     return (
-        <div className="bubble" style={{backgroundColor: "lightgrey"}}>
-            * NewCategory *
+        <div className="category" style={{backgroundColor: "lightgrey"}}>
+            <h3>New Category</h3>
         </div>
     )
 }

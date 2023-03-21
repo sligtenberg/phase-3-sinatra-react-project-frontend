@@ -1,22 +1,13 @@
 import React, { useState } from "react";
+import ViewTask from "./ViewTask";
+import EditTask from "./EditTask";
 
-function Task({ task }) {
+function Task({ task, submitTask }) {
     const [editMode, setEditMode] = useState(false)
 
     return (
         <li>
-            {editMode ?
-                <form>
-                    <input type="text" defaultValue={task.description}></input>
-                    <input type="checkbox" id="priority" defaultChecked={task.high_priority}></input>
-                    <label htmlFor="priority">High Priority</label>
-                    <input type="submit" id="form-submit" className="right-align"></input>
-                </form> :
-                <span onClick={() => setEditMode(true)}>
-                    {task.high_priority ? task.description.toUpperCase() : task.description.toLowerCase()}
-                    <button className="right-align">X</button>
-                </span>
-            }
+            {editMode ? <EditTask task={task} submitTask={submitTask}/> : <ViewTask task={task} setEditMode={setEditMode}/>}
         </li>
     )
 }

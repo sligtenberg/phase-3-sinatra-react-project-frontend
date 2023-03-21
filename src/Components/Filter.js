@@ -1,6 +1,6 @@
 import React from "react";
 
-function Filter({ categoryList, tasks }) {
+function Filter() {
 
     return (
         <div className="filter">
