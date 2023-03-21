@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Task from "./Task";
 import EditTask from "./EditTask";
 
-function Category({ category, tasks, addNewTaskToDOM }) {
+function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM }) {
     const [newTaskMode, setNewTaskMode] = useState(false)
 
     function updateTask(newTask) {
@@ -26,6 +26,7 @@ function Category({ category, tasks, addNewTaskToDOM }) {
             key={task.id}
             task={task}
             submitTask={updateTask}
+            removeTaskFromDOM={removeTaskFromDOM}
         />)
 
     const blankTask = {

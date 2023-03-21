@@ -20,18 +20,18 @@ function App() {
       .then(setTasks)
   }, [])
 
+  // modify DOM without refresh
+  const addNewTaskToDOM = newTask => setTasks([...tasks, newTask])
+  const removeTaskFromDOM = taskId => setTasks(tasks.filter(task => task.id != taskId))
+
   const categoryComponents = categories.map(category =>
     <Category
         key={category.id}
         category={category}
         tasks={tasks.filter(task => task.category_id === category.id)}
         addNewTaskToDOM={addNewTaskToDOM}
+        removeTaskFromDOM={removeTaskFromDOM}
     />)
-
-    function addNewTaskToDOM (newTask) {
-      console.log(newTask)
-      setTasks([...tasks, newTask])
-    }
 
   return (
     <div >
