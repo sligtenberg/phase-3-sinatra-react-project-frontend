@@ -31,6 +31,12 @@ select {
 
 input[type=text] {
   width: 220px;
+  margin-right: 10px;
+}
+
+input[type=color] {
+  margin: 10px;
+  height: 20px;
 }
 
 button, input[type=submit] {
