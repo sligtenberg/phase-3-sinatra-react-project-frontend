@@ -2,10 +2,23 @@ import React, { useState } from "react";
 import Task from "./Task";
 import EditTask from "./EditTask";
 
-function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM }) {
+function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM, modifyTaskOnDOM }) {
     const [newTaskMode, setNewTaskMode] = useState(false)
 
     function updateTask(newTask) {
+        console.log(newTask.id)
+        fetch(`http://localhost:9292/tasks/${newTask.id}`,{
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              description: newTask.description,
+              high_priority: newTask.high_priority
+            })
+        })
+            .then(r => r.json())
+            .then(modifyTaskOnDOM)
     }
 
     function createTask(newTask) {

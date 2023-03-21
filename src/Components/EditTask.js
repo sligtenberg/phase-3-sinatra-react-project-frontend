@@ -1,14 +1,16 @@
 import React from "react";
 
-function EditTask({ task, submitTask }) {
+function EditTask({ task, submitTask, setEditMode }) {
     function handleFormSubmit(event) {
         event.preventDefault()
+        setEditMode(false)
         submitTask({
             description: event.target[0].value,
             category_id: task.category_id,
-            high_priority: event.target[1].checked
+            high_priority: event.target[1].checked,
+            id: task.id
         })
-        
+
     }
 
     return (

@@ -22,7 +22,8 @@ function App() {
 
   // modify DOM without refresh
   const addNewTaskToDOM = newTask => setTasks([...tasks, newTask])
-  const removeTaskFromDOM = taskId => setTasks(tasks.filter(task => task.id != taskId))
+  const removeTaskFromDOM = taskId => setTasks(tasks.filter(task => task.id !== taskId))
+  const modifyTaskOnDOM = newTask => setTasks(tasks.map(task => task.id === newTask.id ? newTask : task))
 
   const categoryComponents = categories.map(category =>
     <Category
@@ -31,6 +32,7 @@ function App() {
         tasks={tasks.filter(task => task.category_id === category.id)}
         addNewTaskToDOM={addNewTaskToDOM}
         removeTaskFromDOM={removeTaskFromDOM}
+        modifyTaskOnDOM={modifyTaskOnDOM}
     />)
 
   return (
