@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Task from "./Task";
 
 function Category({ category, tasks, categoryList }) {
-    const [viewNewTaskForm, setViewNewTaskForm] = useState(false)
 
     const taskComponents = tasks.map(task =>
         <Task
@@ -15,10 +14,7 @@ function Category({ category, tasks, categoryList }) {
     return (
         <div className="bubble" style={{backgroundColor: category.color}}>
             <h3>{category.name}</h3>
-            <ul>
-                {taskComponents}
-                {viewNewTaskForm ? <li></li> : <button></button>}
-            </ul>
+            <ul>{taskComponents}</ul>
         </div>
     )
 }

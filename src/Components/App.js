@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from "react";
 import Filter from "./Filter";
 import Category from "./Category";
+import NewTask from "./NewTask";
 import NewCategory from "./NewCategory";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
       <h1>Stevo's todo list</h1>
       <Filter categoryList={categoryList} tasks={tasks}/>
       {categoryComponents}
+      <NewTask setTasks={setTasks}/>
       <NewCategory setCategories={setCategories}/>
     </div>
   );
