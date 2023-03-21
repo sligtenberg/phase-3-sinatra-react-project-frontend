@@ -1,7 +1,7 @@
 import React from "react";
 import Category from "./Category";
 
-function Filter({ categories, tasks }) {
+function Filter({ categoryList, tasks }) {
 
     return (
         <div className="filter">

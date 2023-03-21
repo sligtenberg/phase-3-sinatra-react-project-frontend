@@ -2,7 +2,7 @@ import React from "react";
 
 function NewCategory() {
     return (
-        <div className="new-item">
+        <div className="bubble" style={{backgroundColor: "lightgrey"}}>
             * NewCategory *
         </div>
     )

@@ -1,17 +1,14 @@
 import React from "react";
-import Task from "./Task.js"
+import Task from "./Task";
 
-function Category({ category, categorizedTasks }) {
-    // console.log(categorizedTasks)
+function Category({ category, tasks, categoryList }) {
 
-    const taskComponents = categorizedTasks.map(task => <Task key={task.id} task={task}/>)
+    const taskComponents = tasks.map(task => <Task key={task.id} task={task} categoryList={categoryList}/>)
 
     return (
         <div className="category" style={{backgroundColor: category.color}}>
             <h3>{category.name}</h3>
-            <ul >
-                {taskComponents}
-            </ul>
+            <ul>{taskComponents}</ul>
         </div>
     )
 }

@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import ViewTask from "./ViewTask";
+import EditTask from "./EditTask";
 
-function Task({ task }) {
-    //console.log(task)
-    const taskDescription = task.high_priority ? task.description.toUpperCase() : task.description.toLowerCase()
+function Task({ task, categoryList }) {
+    const [editMode, setEditMode] = useState(false)
+
     return (
-        <li >
-            {taskDescription}
+        <li>
+            {editMode ?
+                <EditTask task={task} categoryList={categoryList} setEditMode={setEditMode}/> :
+                <ViewTask task={task} setEditMode={setEditMode}/>}
         </li>
     )
 }

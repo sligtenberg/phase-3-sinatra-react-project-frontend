@@ -1,31 +1,49 @@
 body {
-  margin: 0px;
+  margin: 0 auto;
   background: lightblue;
+  /* max-width: 500px;
+  border: 1px solid;
+  border-radius: 5px; */
 }
 
 h1 {
   text-align: center;
 }
 
+h3 {
+  margin: 5px 0px;
+}
+
+ul {
+  margin: 5px 0px;
+}
+
+input {
+  width: 280px;
+}
+
+select {
+  margin: 0px 10px;
+  height: 20px;
+}
+
+button {
+  margin: 0px 2px;
+  border: 1px solid;
+  border-radius: 4px
+}
+
 .filter {
   display: flex;
   background: lightcoral;
   font-size: 20px;
-  padding: 5px;
+  padding: 5px 0px;
   width: 100%;
 }
 
 .category {
   margin: 10px;
-  padding: 5px;
+  padding: 10px 15px;
   border: 1px solid;
   border-radius: 5px;
-}
-
-.new-item {
-  margin: 10px;
-  padding: 5px;
-  border: 1px solid;
-  border-radius: 5px;
-  background:lightgrey
 }
