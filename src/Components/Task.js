@@ -9,7 +9,7 @@ function Task({ task, submitTask, removeTaskFromDOM, modifyTaskOnDOM }) {
         <li>
             {editMode ?
                 <EditTask task={task} submitTask={submitTask} setEditMode={setEditMode} modifyTaskOnDOM={modifyTaskOnDOM}/> :
-                <ViewTask task={task} setEditMode={setEditMode} />
+                <ViewTask task={task} setEditMode={setEditMode} removeTaskFromDOM={removeTaskFromDOM}/>
             }
         </li>
     )
