@@ -5,37 +5,39 @@ import NewCategory from "./NewCategory";
 
 function App() {
   const [categories, setCategories] = useState([])
-  const [tasks, setTasks] = useState([])
 
-  // execute on load
+  // execute on load - get categories from server
   useEffect(() => {
-    // get categories from server
     fetch("http://localhost:9292/categories")
       .then(r => r.json())
       .then(setCategories)
-    
-    // get tasks from server
-    fetch("http://localhost:9292/tasks")
-      .then(r => r.json())
-      .then(setTasks)
   }, [])
 
-  // modify DOM without refresh
-  const addNewTaskToDOM = newTask => setTasks([...tasks, newTask])
-  const removeTaskFromDOM = taskId => setTasks(tasks.filter(task => task.id !== taskId))
-  const modifyTaskOnDOM = newTask => setTasks(tasks.map(task => task.id === newTask.id ? newTask : task))
-  const addNewCategoryToDOM = newCategory => setCategories([...categories, newCategory])
-  const removeCategoryFromDOM = categoryId => setCategories(categories.filter(category => category.id !== categoryId))
+  function createCategory(newCategory) {
+    fetch("http://localhost:9292/categories", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCategory)
+    })
+      .then(r => r.json())
+      .then((newCategory) => setCategories([...categories, newCategory]))
+  }
+
+  function deleteCategory(categoryId) {
+    fetch(`http://localhost:9292/categories/${categoryId}`, {
+      method: "DELETE",
+    })
+      .then(r => r.json())
+      .then(setCategories(categories.filter(category => category.id !== categoryId)))
+  }
 
   const categoryComponents = categories.map(category =>
     <Category
         key={category.id}
         category={category}
-        tasks={tasks.filter(task => task.category_id === category.id)}
-        addNewTaskToDOM={addNewTaskToDOM}
-        removeTaskFromDOM={removeTaskFromDOM}
-        modifyTaskOnDOM={modifyTaskOnDOM}
-        removeCategoryFromDOM={removeCategoryFromDOM}
+        deleteCategory={deleteCategory}
     />)
 
   return (
@@ -43,7 +45,7 @@ function App() {
       <h1>Stevo's todo list</h1>
       <Filter />
       {categoryComponents}
-      <NewCategory addNewCategoryToDOM={addNewCategoryToDOM} />
+      <NewCategory createCategory={createCategory} />
     </div>
   );
 }

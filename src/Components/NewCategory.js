@@ -1,27 +1,16 @@
 import React, {useState } from "react";
 
-function NewCategory({ addNewCategoryToDOM }) {
+function NewCategory({ createCategory }) {
     const [newCategoryMode, setNewCategoryMode] = useState(false)
     const [color, setColor] = useState("#D3D3D3")
 
     function handleNewCategorySubmit(event) {
-        console.log(event)
-        event.target.reset()
         event.preventDefault()
-        const newCategory = {
+        createCategory({
             name: event.target[0].value,
             color: color
-        }
-
-        fetch("http://localhost:9292/categories", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newCategory)
         })
-            .then(r => r.json())
-            .then(addNewCategoryToDOM)
+        setNewCategoryMode(false)
     }
 
     return (

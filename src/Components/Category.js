@@ -1,9 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Task from "./Task";
 import EditTask from "./EditTask";
 
-function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM, modifyTaskOnDOM, removeCategoryFromDOM }) {
+function Category({ category, deleteCategory }) {
+    const [tasks, setTasks] = useState([])
     const [newTaskMode, setNewTaskMode] = useState(false)
+
+    // execute on load - get tasks from server
+    useEffect(() => {
+        fetch(`http://localhost:9292/categories/${category.id}/tasks`)
+        .then(r => r.json())
+        .then(setTasks)
+    }, [])
+
+    function createTask(newTask) {
+        setNewTaskMode(false)
+        fetch("http://localhost:9292/tasks", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newTask)
+        })
+            .then(r => r.json())
+            .then(newTask => setTasks([...tasks, newTask]))
+    }
 
     function updateTask(newTask) {
         fetch(`http://localhost:9292/tasks/${newTask.id}`,{
@@ -17,28 +38,16 @@ function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM, modifyT
             })
         })
             .then(r => r.json())
-            .then(modifyTaskOnDOM)
+            .then(newTask => setTasks(tasks.map(task => task.id === newTask.id ? newTask : task)))
     }
 
-    function createTask(newTask) {
-        setNewTaskMode(false)
-        fetch("http://localhost:9292/tasks", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newTask)
-        })
-            .then(r => r.json())
-            .then(addNewTaskToDOM)
-    }
-
-    function handleDeleteCategory() {
-        fetch(`http://localhost:9292/categories/${category.id}`, {
+    function deleteTask(taskId) {
+        console.log(taskId)
+        fetch(`http://localhost:9292/tasks/${taskId}`, {
             method: "DELETE",
         })
             .then(r => r.json())
-            .then(() => removeCategoryFromDOM(category.id))
+            .then(() => setTasks(tasks.filter(task => task.id !== taskId)))
     }
 
     const taskComponents = tasks.map(task =>
@@ -46,7 +55,7 @@ function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM, modifyT
             key={task.id}
             task={task}
             submitTask={updateTask}
-            removeTaskFromDOM={removeTaskFromDOM}
+            deleteTask={deleteTask}
         />)
 
     const blankTask = {
@@ -58,7 +67,7 @@ function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM, modifyT
     return (
         <div className="category" style={{backgroundColor: category.color}}>
             <h3>{category.name}</h3>
-            {tasks.length > 0 ? null : <button onClick={handleDeleteCategory}>Delete Category</button>}
+            {tasks.length > 0 ? null : <button onClick={() => deleteCategory(category.id)}>Delete Category</button>}
             <button onClick={() => setNewTaskMode(!newTaskMode)}>{newTaskMode ? "Cancel" : "New Task"}</button>
             <ul>
                 {taskComponents}
