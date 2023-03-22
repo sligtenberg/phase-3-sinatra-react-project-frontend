@@ -5,6 +5,8 @@ function NewCategory({ addNewCategoryToDOM }) {
     const [color, setColor] = useState("#D3D3D3")
 
     function handleNewCategorySubmit(event) {
+        console.log(event)
+        event.target.reset()
         event.preventDefault()
         const newCategory = {
             name: event.target[0].value,

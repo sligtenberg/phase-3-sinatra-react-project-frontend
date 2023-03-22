@@ -25,6 +25,7 @@ function App() {
   const removeTaskFromDOM = taskId => setTasks(tasks.filter(task => task.id !== taskId))
   const modifyTaskOnDOM = newTask => setTasks(tasks.map(task => task.id === newTask.id ? newTask : task))
   const addNewCategoryToDOM = newCategory => setCategories([...categories, newCategory])
+  const removeCategoryFromDOM = categoryId => setCategories(categories.filter(category => category.id !== categoryId))
 
   const categoryComponents = categories.map(category =>
     <Category
@@ -34,6 +35,7 @@ function App() {
         addNewTaskToDOM={addNewTaskToDOM}
         removeTaskFromDOM={removeTaskFromDOM}
         modifyTaskOnDOM={modifyTaskOnDOM}
+        removeCategoryFromDOM={removeCategoryFromDOM}
     />)
 
   return (

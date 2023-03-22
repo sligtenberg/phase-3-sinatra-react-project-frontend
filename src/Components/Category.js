@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import Task from "./Task";
 import EditTask from "./EditTask";
 
-function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM, modifyTaskOnDOM }) {
+function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM, modifyTaskOnDOM, removeCategoryFromDOM }) {
     const [newTaskMode, setNewTaskMode] = useState(false)
 
     function updateTask(newTask) {
-        console.log(newTask.id)
         fetch(`http://localhost:9292/tasks/${newTask.id}`,{
             method: "PATCH",
             headers: {
@@ -34,6 +33,14 @@ function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM, modifyT
             .then(addNewTaskToDOM)
     }
 
+    function handleDeleteCategory() {
+        fetch(`http://localhost:9292/categories/${category.id}`, {
+            method: "DELETE",
+        })
+            .then(r => r.json())
+            .then(() => removeCategoryFromDOM(category.id))
+    }
+
     const taskComponents = tasks.map(task =>
         <Task
             key={task.id}
@@ -51,6 +58,7 @@ function Category({ category, tasks, addNewTaskToDOM, removeTaskFromDOM, modifyT
     return (
         <div className="category" style={{backgroundColor: category.color}}>
             <h3>{category.name}</h3>
+            {tasks.length > 0 ? null : <button onClick={handleDeleteCategory}>Delete Category</button>}
             <button onClick={() => setNewTaskMode(!newTaskMode)}>{newTaskMode ? "Cancel" : "New Task"}</button>
             <ul>
                 {taskComponents}
