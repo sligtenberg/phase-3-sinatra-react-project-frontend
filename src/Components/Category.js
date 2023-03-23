@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Task from "./Task";
 import EditTask from "./EditTask";
 
 function Category({ category, deleteCategory }) {
-    const [tasks, setTasks] = useState([])
+    const [tasks, setTasks] = useState(category.tasks)
     const [newTaskMode, setNewTaskMode] = useState(false)
-
-    // execute on load - get tasks from server
-    useEffect(() => {
-        fetch(`http://localhost:9292/categories/${category.id}/tasks`)
-        .then(r => r.json())
-        .then(setTasks)
-    }, [])
 
     function createTask(newTask) {
         setNewTaskMode(false)
@@ -42,7 +35,6 @@ function Category({ category, deleteCategory }) {
     }
 
     function deleteTask(taskId) {
-        console.log(taskId)
         fetch(`http://localhost:9292/tasks/${taskId}`, {
             method: "DELETE",
         })

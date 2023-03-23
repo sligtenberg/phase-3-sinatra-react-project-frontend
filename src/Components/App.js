@@ -2,13 +2,14 @@ import React, {useState, useEffect } from "react";
 import Filter from "./Filter";
 import Category from "./Category";
 import NewCategory from "./NewCategory";
+// import Test from "./Test";
 
 function App() {
   const [categories, setCategories] = useState([])
 
   // execute on load - get categories from server
   useEffect(() => {
-    fetch("http://localhost:9292/categories")
+    fetch("http://localhost:9292")
       .then(r => r.json())
       .then(setCategories)
   }, [])
@@ -22,7 +23,7 @@ function App() {
       body: JSON.stringify(newCategory)
     })
       .then(r => r.json())
-      .then((newCategory) => setCategories([...categories, newCategory]))
+      .then(newCategory => setCategories([...categories, {...newCategory, tasks: []}]))
   }
 
   function deleteCategory(categoryId) {
@@ -46,6 +47,7 @@ function App() {
       <Filter />
       {categoryComponents}
       <NewCategory createCategory={createCategory} />
+      {/* <Test /> */}
     </div>
   );
 }
