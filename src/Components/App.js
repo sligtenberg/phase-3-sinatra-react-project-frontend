@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from "react";
-import Filter from "./Filter";
+// import Filter from "./Filter";
 import Category from "./Category";
 import NewCategory from "./NewCategory";
 // import Test from "./Test";
@@ -44,7 +44,7 @@ function App() {
   return (
     <div >
       <h1>Stevo's todo list</h1>
-      <Filter />
+      {/* <Filter /> */}
       {categoryComponents}
       <NewCategory createCategory={createCategory} />
       {/* <Test /> */}
