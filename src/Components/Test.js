@@ -2,7 +2,7 @@ import React from "react";
 
 function Test() {
     function callSayHi(){
-        fetch("http://localhost:9292/say_hi")
+        fetch("http://localhost:9292/task/say_hi")
             .then(r => r.json())
             .then(r => console.log(r))
     }
