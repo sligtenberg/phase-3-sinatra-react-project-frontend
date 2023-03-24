@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import Task from "./Task";
 import EditTask from "./EditTask";
 
-function Category({ category, deleteCategory }) {
-    const [tasks, setTasks] = useState(category.tasks)
+function Category({ category, deleteCategory, updateCategories }) {
     const [newTaskMode, setNewTaskMode] = useState(false)
+
+    function updateTaskList(newTaskList) {
+        const newCategory = category
+        newCategory.tasks = newTaskList
+        updateCategories(newCategory)
+    }
 
     function createTask(newTask) {
         setNewTaskMode(false)
@@ -16,7 +21,7 @@ function Category({ category, deleteCategory }) {
             body: JSON.stringify(newTask)
         })
             .then(r => r.json())
-            .then(newTask => setTasks([...tasks, newTask]))
+            .then(newTask => updateTaskList([...category.tasks, newTask]))
     }
 
     function updateTask(newTask) {
@@ -31,7 +36,7 @@ function Category({ category, deleteCategory }) {
             })
         })
             .then(r => r.json())
-            .then(newTask => setTasks(tasks.map(task => task.id === newTask.id ? newTask : task)))
+            .then(newTask => updateTaskList(category.tasks.map(task => task.id === newTask.id ? newTask : task)))
     }
 
     function deleteTask(taskId) {
@@ -39,10 +44,10 @@ function Category({ category, deleteCategory }) {
             method: "DELETE",
         })
             .then(r => r.json())
-            .then(() => setTasks(tasks.filter(task => task.id !== taskId)))
+            .then(() => updateTaskList(category.tasks.filter(task => task.id !== taskId)))
     }
 
-    const taskComponents = tasks.map(task =>
+    const taskComponents = category.tasks.map(task =>
         <Task
             key={task.id}
             task={task}
@@ -59,7 +64,7 @@ function Category({ category, deleteCategory }) {
     return (
         <div className="category" style={{backgroundColor: category.color}}>
             <h3>{category.name}</h3>
-            {tasks.length > 0 ? null : <button onClick={() => deleteCategory(category.id)}>Delete Category</button>}
+            {category.tasks.length > 0 ? null : <button onClick={() => deleteCategory(category.id)}>Delete Category</button>}
             <button onClick={() => setNewTaskMode(!newTaskMode)}>{newTaskMode ? "Cancel" : "New Task"}</button>
             <ul>
                 {taskComponents}

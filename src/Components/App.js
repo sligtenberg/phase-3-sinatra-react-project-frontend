@@ -34,11 +34,14 @@ function App() {
       .then(setCategories(categories.filter(category => category.id !== categoryId)))
   }
 
+  const updateCategories = newCategory => setCategories(categories.map(category => category.id === newCategory.id ? newCategory : category))
+
   const categoryComponents = categories.map(category =>
     <Category
         key={category.id}
         category={category}
         deleteCategory={deleteCategory}
+        updateCategories={updateCategories}
     />)
 
   return (
