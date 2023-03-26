@@ -1,11 +1,12 @@
 import React, {useState, useEffect } from "react";
-// import Filter from "./Filter";
+import Filter from "./Filter";
 import Category from "./Category";
 import NewCategory from "./NewCategory";
 // import Test from "./Test";
 
 function App() {
   const [categories, setCategories] = useState([])
+  const [displayedCategory, setDisplayedCategory] = useState("all")
 
   // execute on load - get categories from server
   useEffect(() => {
@@ -34,6 +35,8 @@ function App() {
       .then(setCategories(categories.filter(category => category.id !== categoryId)))
   }
 
+  // this function is passed to Category components as a prop. Category components are
+  // responsible for building the new category which gets passed here and used to update category state
   const updateCategories = newCategory => setCategories(categories.map(category => category.id === newCategory.id ? newCategory : category))
 
   const categoryComponents = categories.map(category =>
@@ -47,7 +50,7 @@ function App() {
   return (
     <div >
       <h1>Stevo's todo list</h1>
-      {/* <Filter /> */}
+      <Filter categories={categories}/>
       {categoryComponents}
       <NewCategory createCategory={createCategory} />
       {/* <Test /> */}

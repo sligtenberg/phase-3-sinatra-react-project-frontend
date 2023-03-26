@@ -6,14 +6,16 @@ function NewCategory({ createCategory }) {
 
     function handleNewCategorySubmit(event) {
         event.preventDefault()
-        if (event.target[0].value) {
+        const name = event.target[0].value
+        if (!name) alert("Category must have a name")
+        else if (name === "all") alert(`Category name may not be ${name}`)
+        else {
             createCategory({
-                name: event.target[0].value,
+                name: name,
                 color: color
             })
             setNewCategoryMode(false)
         }
-        else alert("Category must have a name")
     }
 
     return (
