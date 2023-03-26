@@ -1,31 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Filter({ categories }) {
-    const [categoryDropdownSelection, setCategoryDropdownSelection] = useState("all")
-
-    function handleCategoryDropdownChange(event) {
-        console.log(event)
-        setCategoryDropdownSelection(event.target.value)
-    }
-
-    // function handlePriorityDropdownChange() {
-
-    // }
-
-    const categoryDropdownOptions = categories.map(category => <option key={category.id} value={category.name}>{category.name}</option>)
+function Filter({ categoryNames, displayedCategory, setDisplayedCategory }) {
+    const categoryDropdownOptions = categoryNames.map(categoryName => <option key={categoryName} value={categoryName}>{categoryName}</option>)
 
     return (
-        <form className="filter">
-            <select value={categoryDropdownSelection} onChange={handleCategoryDropdownChange}>
+        <div className="filter">
+            <select value={displayedCategory} onChange={(event) => setDisplayedCategory(event.target.value)}>
                 <option value="all">All Categories</option>
                 {categoryDropdownOptions}
             </select>
-            {/* <select value={dropdownSelections.priority_level} onChange={handlePriorityDropdownChange}>
-                <option value="all">Any Priority</option>
-                <option value="high">High Priority</option>
-                <option value="low">Low Priority</option>
-            </select> */}
-        </form>
+        </div>
     )
 }
 

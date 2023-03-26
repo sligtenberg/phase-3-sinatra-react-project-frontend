@@ -7,13 +7,20 @@ import NewCategory from "./NewCategory";
 function App() {
   const [categories, setCategories] = useState([])
   const [displayedCategory, setDisplayedCategory] = useState("all")
+  const [categoryNames, setCategoryNames] = useState([])
 
   // execute on load - get categories from server
   useEffect(() => {
-    fetch("http://localhost:9292")
+    fetch(`http://localhost:9292/categories/${displayedCategory}`)
       .then(r => r.json())
       .then(setCategories)
-  }, [])
+  }, [displayedCategory])
+
+  useEffect(() => {
+    fetch('http://localhost:9292/categories/names')
+      .then(r => r.json())
+      .then(setCategoryNames)
+  }, [categories])
 
   function createCategory(newCategory) {
     fetch("http://localhost:9292/categories", {
@@ -50,9 +57,9 @@ function App() {
   return (
     <div >
       <h1>Stevo's todo list</h1>
-      <Filter categories={categories}/>
+      <Filter categoryNames={categoryNames} displayedCategory={displayedCategory} setDisplayedCategory={setDisplayedCategory} />
       {categoryComponents}
-      <NewCategory createCategory={createCategory} />
+      {displayedCategory === "all" ? <NewCategory createCategory={createCategory} /> : null}
       {/* <Test /> */}
     </div>
   );
