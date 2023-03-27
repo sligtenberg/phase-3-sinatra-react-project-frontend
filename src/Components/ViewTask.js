@@ -4,7 +4,7 @@ function ViewTask({ task, setEditMode, deleteTask }) {
 
     return (
         <span>
-            <span className={task.high_priority ? "bold" : null} onClick={() => setEditMode(true)}>
+            <span className={task.high_priority ? "high-priority" : null} onClick={() => setEditMode(true)}>
                 {task.description}
             </span>
             <button onClick={() => deleteTask(task.id)}>X</button>
