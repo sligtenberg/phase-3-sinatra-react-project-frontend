@@ -4,6 +4,26 @@ import EditTask from "./EditTask";
 
 function Category({ category, deleteCategory, updateCategories }) {
     const [newTaskMode, setNewTaskMode] = useState(false)
+    // const [newColorMode, setNewColorMode] = useState(false)
+
+    // function handleColorChange(event) {
+    //     event.preventDefault()
+    //     const newColor = event.target.value
+    //     const newCategory = category
+    //     newCategory.color = newColor
+    //     setNewColorMode(false)
+    //     fetch(`http://localhost:9292/categories/${category.id}`, {
+    //         method: "PATCH",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //           color: newColor
+    //         })
+    //     })
+    //         .then(r => r.json())
+    //         .then(updateCategories(newCategory))
+    // }
 
     function updateTaskList(newTaskList) {
         const newCategory = category
@@ -66,6 +86,9 @@ function Category({ category, deleteCategory, updateCategories }) {
             <h3>{category.name}</h3>
             {category.tasks.length > 0 ? null : <button onClick={() => deleteCategory(category.id)}>Delete Category</button>}
             <button onClick={() => setNewTaskMode(!newTaskMode)}>{newTaskMode ? "Cancel" : "New Task"}</button>
+            {/* {newColorMode ?
+                <input id="color" type="color" value={category.color} onChange={handleColorChange}></input> :
+                <button onClick={() => setNewColorMode(true)}>Change Color</button>} */}
             <ul>
                 {taskComponents}
                 {newTaskMode ? <li><EditTask task={blankTask} submitTask={createTask}/></li> : null}
