@@ -8,6 +8,10 @@ function App() {
   const [categories, setCategories] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [categoryNames, setCategoryNames] = useState([])
+  const [selectedPriorityLevels, setSelectedPriorityLevels] = useState({
+    highPriority: true,
+    lowPriority: true
+  })
 
   // execute on load - get categories from server
   useEffect(() => {
@@ -52,12 +56,19 @@ function App() {
         category={category}
         deleteCategory={deleteCategory}
         updateCategories={updateCategories}
+        selectedPriorityLevels={selectedPriorityLevels}
     />)
 
   return (
     <div >
       <h1>Stevo's todo list</h1>
-      <Filter categoryNames={categoryNames} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+      <Filter
+        categoryNames={categoryNames}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        selectedPriorityLevels={selectedPriorityLevels}
+        setSelectedPriorityLevels={setSelectedPriorityLevels}
+      />
       {categoryComponents}
       {selectedCategory === "all" ? <NewCategory createCategory={createCategory} /> : null}
       {/* <Test /> */}

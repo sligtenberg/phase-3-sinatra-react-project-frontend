@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Task from "./Task";
 import EditTask from "./EditTask";
 
-function Category({ category, deleteCategory, updateCategories }) {
+function Category({ category, deleteCategory, updateCategories, selectedPriorityLevels }) {
     const [newTaskMode, setNewTaskMode] = useState(false)
     // const [newColorMode, setNewColorMode] = useState(false)
 
@@ -67,7 +67,12 @@ function Category({ category, deleteCategory, updateCategories }) {
             .then(() => updateTaskList(category.tasks.filter(task => task.id !== taskId)))
     }
 
-    const taskComponents = category.tasks.map(task =>
+    const filteredTasks = category.tasks.filter(
+        task => (task.high_priority && selectedPriorityLevels.highPriority) ||
+        (!task.high_priority && selectedPriorityLevels.lowPriority
+    ))
+
+    const taskComponents = filteredTasks.map(task =>
         <Task
             key={task.id}
             task={task}
