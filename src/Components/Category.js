@@ -4,26 +4,6 @@ import EditTask from "./EditTask";
 
 function Category({ category, deleteCategory, updateCategories, selectedPriorityLevels }) {
     const [newTaskMode, setNewTaskMode] = useState(false)
-    // const [newColorMode, setNewColorMode] = useState(false)
-
-    // function handleColorChange(event) {
-    //     event.preventDefault()
-    //     const newColor = event.target.value
-    //     const newCategory = category
-    //     newCategory.color = newColor
-    //     setNewColorMode(false)
-    //     fetch(`http://localhost:9292/categories/${category.id}`, {
-    //         method: "PATCH",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //           color: newColor
-    //         })
-    //     })
-    //         .then(r => r.json())
-    //         .then(updateCategories(newCategory))
-    // }
 
     function updateTaskList(newTaskList) {
         const newCategory = category
@@ -56,7 +36,8 @@ function Category({ category, deleteCategory, updateCategories, selectedPriority
             })
         })
             .then(r => r.json())
-            .then(newTask => updateTaskList(category.tasks.map(task => task.id === newTask.id ? newTask : task)))
+            .then(newTask => updateTaskList(category.tasks
+                .map(task => task.id === newTask.id ? newTask : task)))
     }
 
     function deleteTask(taskId) {
@@ -67,12 +48,10 @@ function Category({ category, deleteCategory, updateCategories, selectedPriority
             .then(() => updateTaskList(category.tasks.filter(task => task.id !== taskId)))
     }
 
-    const filteredTasks = category.tasks.filter(
-        task => (task.high_priority && selectedPriorityLevels.highPriority) ||
-        (!task.high_priority && selectedPriorityLevels.lowPriority
-    ))
-
-    const taskComponents = filteredTasks.map(task =>
+    const taskComponents = category.tasks
+        .filter(task => (task.high_priority && selectedPriorityLevels.highPriority) ||
+            (!task.high_priority && selectedPriorityLevels.lowPriority))
+        .map(task =>
         <Task
             key={task.id}
             task={task}
@@ -89,11 +68,9 @@ function Category({ category, deleteCategory, updateCategories, selectedPriority
     return (
         <div className="category" style={{backgroundColor: category.color}}>
             <h3>{category.name}</h3>
-            {category.tasks.length > 0 ? null : <button onClick={() => deleteCategory(category.id)}>Delete Category</button>}
+            {category.tasks.length > 0 ? null :
+                <button onClick={() => deleteCategory(category.id)}>Delete Category</button>}
             <button onClick={() => setNewTaskMode(!newTaskMode)}>{newTaskMode ? "Cancel" : "New Task"}</button>
-            {/* {newColorMode ?
-                <input id="color" type="color" value={category.color} onChange={handleColorChange}></input> :
-                <button onClick={() => setNewColorMode(true)}>Change Color</button>} */}
             <ul>
                 {taskComponents}
                 {newTaskMode ? <li><EditTask task={blankTask} submitTask={createTask}/></li> : null}

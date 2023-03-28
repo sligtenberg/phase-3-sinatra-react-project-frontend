@@ -3,7 +3,7 @@ html{
 }
 
 body {
-  margin: 10px;
+  margin: 20px;
   background: lightblue;
   max-width: 480px;
   height: 800px;
@@ -31,28 +31,21 @@ ul {
 input[type=text] {
   width: 230px;
   margin-right: 10px;
-}
-
-input[type=color] {
-  margin: 10px;
-  height: 20px;
+  height: fit-content;
 }
 
 select {
-  margin: 5px 10px;
+  margin: 5px 30px;
 }
 
-button, input[type=submit] {
-  margin-right: 10px;
+button, input[type=submit], input[type=color] {
+  margin-right: 5px;
   font-size: 12px;
   border: 1px solid;
   border-radius: 4px;
   background: white;
   float: right;
-}
-
-label {
-  font-size: 15px;
+  height: 18px;
 }
 
 .high-priority {
@@ -61,8 +54,9 @@ label {
 }
 
 .category {
-  margin: 10px;
-  padding: 10px 0px;
+  margin: 5px;
+  padding: 5px;
   border: 1px solid;
   border-radius: 5px;
+  min-height: 20px;
 }

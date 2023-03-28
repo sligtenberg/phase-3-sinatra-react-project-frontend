@@ -7,7 +7,6 @@ import NewCategory from "./NewCategory";
 function App() {
   const [categories, setCategories] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("all")
-  const [categoryNames, setCategoryNames] = useState([])
   const [selectedPriorityLevels, setSelectedPriorityLevels] = useState({
     highPriority: true,
     lowPriority: true
@@ -15,19 +14,13 @@ function App() {
 
   // execute on load - get categories from server
   useEffect(() => {
-    fetch(`http://localhost:9292/categories/${selectedCategory}`)
+    fetch('http://localhost:9292')
       .then(r => r.json())
       .then(setCategories)
-  }, [selectedCategory])
-
-  useEffect(() => {
-    fetch('http://localhost:9292/categories/names')
-      .then(r => r.json())
-      .then(setCategoryNames)
-  }, [categories])
+  }, [])
 
   function createCategory(newCategory) {
-    fetch("http://localhost:9292/categories", {
+    fetch('http://localhost:9292/categories', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,28 +39,31 @@ function App() {
       .then(setCategories(categories.filter(category => category.id !== categoryId)))
   }
 
-  // this function is passed to Category components as a prop. Category components are
-  // responsible for building the new category which gets passed here and used to update category state
-  const updateCategories = newCategory => setCategories(categories.map(category => category.id === newCategory.id ? newCategory : category))
+  // this function is passed to Category components as a prop. Category components are responsible
+  // for building the new category which gets passed here and used to update category state
+  const updateCategories = newCategory => setCategories(categories
+    .map(category => category.id === newCategory.id ? newCategory : category))
 
-  const categoryComponents = categories.map(category =>
-    <Category
-        key={category.id}
-        category={category}
-        deleteCategory={deleteCategory}
-        updateCategories={updateCategories}
-        selectedPriorityLevels={selectedPriorityLevels}
-    />)
+  const categoryComponents = categories
+    .filter(category => selectedCategory === "all" ? true : selectedCategory === category.name)
+    .map(category =>
+      <Category
+          key={category.id}
+          category={category}
+          deleteCategory={deleteCategory}
+          updateCategories={updateCategories}
+          selectedPriorityLevels={selectedPriorityLevels}
+      />)
 
   return (
     <div >
       <h1>Stevo's todo list</h1>
       <Filter
-        categoryNames={categoryNames}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
         selectedPriorityLevels={selectedPriorityLevels}
         setSelectedPriorityLevels={setSelectedPriorityLevels}
+        categories={categories}
       />
       {categoryComponents}
       {selectedCategory === "all" ? <NewCategory createCategory={createCategory} /> : null}

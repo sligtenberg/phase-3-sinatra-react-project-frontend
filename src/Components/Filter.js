@@ -1,18 +1,13 @@
 import React from "react";
 
-function Filter(
-    {
-        categoryNames,
-        displayedCategory,
-        setDisplayedCategory,
-        selectedPriorityLevels,
-        setSelectedPriorityLevels
-    }) {
-    const categoryDropdownOptions = categoryNames.map(categoryName => <option key={categoryName} value={categoryName}>{categoryName}</option>)
+function Filter({ selectedCategory, setSelectedCategory, selectedPriorityLevels, setSelectedPriorityLevels, categories }) {
+    const categoryDropdownOptions = categories.map(category =>
+        <option key={category.id} value={category.name}>{category.name}</option>
+    )
 
     return (
         <nav >
-            <select value={displayedCategory} onChange={event => setDisplayedCategory(event.target.value)}>
+            <select value={selectedCategory} onChange={event => setSelectedCategory(event.target.value)}>
                 <option value="all">All Categories</option>
                 {categoryDropdownOptions}
             </select>
