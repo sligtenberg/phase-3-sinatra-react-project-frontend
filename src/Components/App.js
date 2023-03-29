@@ -13,12 +13,17 @@ function App() {
   })
 
   // execute on load - get categories from server
+  // this route includes the tasks nested within their respective categories
+  // so this is also the get request for tasks
   useEffect(() => {
     fetch('http://localhost:9292')
       .then(r => r.json())
       .then(setCategories)
   }, [])
 
+  // this function takes a fully constructed new category as an argument
+  // then makes a post request to add that category to the backend
+  // then updates the frontend to reflect this change without a refresh
   function createCategory(newCategory) {
     fetch('http://localhost:9292/categories', {
       method: "POST",
@@ -31,6 +36,9 @@ function App() {
       .then(newCategory => setCategories([...categories, {...newCategory, tasks: []}]))
   }
 
+  // this function takes a category ID as an argument
+  // then deletes that category form the backend
+  // then updates the frontend to reflect that change without a refresh
   function deleteCategory(categoryId) {
     fetch(`http://localhost:9292/categories/${categoryId}`, {
       method: "DELETE",

@@ -5,6 +5,11 @@ function NewCategory({ createCategory }) {
     const [color, setColor] = useState("lightgrey")
     const [setColorMode, setSetColorMode] = useState(false)
 
+    // this function is called when the new category submit button is clicked
+    // first, we check if the name is legitimate
+    // then we call createCategory, and pass in the new category, which is 
+    // constructed from the form values
+    // finally, we reset the new category form
     function handleNewCategorySubmit(event) {
         event.preventDefault()
         const name = event.target[0].value
@@ -16,6 +21,7 @@ function NewCategory({ createCategory }) {
                 color: color
             })
             setNewCategoryMode(false)
+            setColor("lightgrey")
         }
     }
 
@@ -28,7 +34,7 @@ function NewCategory({ createCategory }) {
             }}>{newCategoryMode ? "Cancel" : "New Category"}</button>
             {newCategoryMode ?
                 <form onSubmit={handleNewCategorySubmit} style={{display: "flex"}}>
-                    <input type="text" placeholder="Name" style={{marginLeft: "5px"}}></input>
+                    <input type="text" placeholder="Name" style={{marginLeft: "5px"}} autoFocus></input>
                     {setColorMode ?
                         <input id="color" type="color" value={color} onChange={event => setColor(event.target.value)}></input> :
                         <button onClick={() => setSetColorMode(true)}>Color</button>}
